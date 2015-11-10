@@ -3,6 +3,7 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
+//http://hostname/api/
 $app->get('/', function() use ($app){
     echo "Welcome to REST API";
 });
