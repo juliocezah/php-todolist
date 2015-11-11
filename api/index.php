@@ -4,10 +4,12 @@ require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
 //http://hostname/api/
+//get all tasks
 $app->get('/', function() use ($app){
     echo "Welcome to REST API";
 });
 
+//get a task by id
 //http://url(...)/api/tasks
 $app->get('/tasks', function() use ($app){
     $tasks = getTasks();
@@ -25,9 +27,16 @@ $app->get('/tasks/:id', function($id) use ( $app ){
      echo json_encode($tasks[$index]);
    }
    else{
-       $app->response()->setStatus(404);
+       $app->response()->setStatus(204); //antes estava 404. o 204 não aparece a msg
        echo "Not found";
    }
+});
+
+$app->post('/tasks', function() use ( $app ) {
+    $taskJson = $app->request()->getBody();
+    $task = json_decode($taskJson);
+    //print_r($task);
+    echo $task->description;
 });
 
 //TODO move it to a DAO class
